@@ -1,8 +1,8 @@
--- Criando o banco de dados
+-- Creating the database
 CREATE DATABASE EstudoSQL;
 USE EstudoSQL;
 
--- Criando tabelas (DDL)
+-- Creating tables (DDL)
 CREATE TABLE Clientes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE Pedidos (
     FOREIGN KEY (cliente_id) REFERENCES Clientes(id)
 );
 
--- Inserindo dados (DML)
+-- Inserting data (DML)
 INSERT INTO Clientes (nome, email, idade) VALUES 
 ('João Silva', 'joao@email.com', 30),
 ('Maria Oliveira', 'maria@email.com', 25),
@@ -63,22 +63,22 @@ INSERT INTO Pedidos (cliente_id, data_pedido, total) VALUES
 (19, '2025-03-22', 315.75),
 (20, '2025-03-25', 290.00);
 
--- Operações CRUD
+-- CRUD operations
 SELECT * FROM Clientes;
 UPDATE Clientes SET idade = 31 WHERE id = 1;
 DELETE FROM Pedidos WHERE id = 2;
 
--- Junções
+-- Joins
 SELECT Clientes.nome, Pedidos.total FROM Clientes 
 INNER JOIN Pedidos ON Clientes.id = Pedidos.cliente_id;
 
--- Funções de agregação
+-- Aggregation functions
 SELECT cliente_id, COUNT(*) AS total_pedidos, SUM(total) AS total_gasto FROM Pedidos GROUP BY cliente_id HAVING SUM(total) > 100;
 
 -- Subqueries
 SELECT nome FROM Clientes WHERE id IN (SELECT cliente_id FROM Pedidos WHERE total > 200);
 
--- Transações (TCL)
+-- Transactions (TCL)
 START TRANSACTION;
 UPDATE Pedidos SET total = total + 10 WHERE id = 1;
 ROLLBACK;
